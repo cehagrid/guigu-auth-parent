@@ -14,5 +14,15 @@ public class CustomUser extends User {
 
     public CustomUser(SysUser sysUser, Collection<? extends GrantedAuthority> authorities) {
         super(sysUser.getUsername(),sysUser.getPassword(),authorities);
+        //给当前对象的sysUser属性赋值
+        this.sysUser = sysUser;
+    }
+
+    public SysUser getSysUser(){
+        return sysUser;
+    }
+
+    public void setSysUser(SysUser sysUser){
+        this.sysUser = sysUser;
     }
 }
