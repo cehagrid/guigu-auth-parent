@@ -33,11 +33,13 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter{
         //设置认证管理器
         this.setAuthenticationManager(authenticationManager);
         //设置登录的请求地址和请求方式
-        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login","POST"));
+//        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login","POST"));
+        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/system/index/login", "POST"));
         this.redisTemplate = redisTemplate;
     }
 
 
+    //用户认证的方法
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {

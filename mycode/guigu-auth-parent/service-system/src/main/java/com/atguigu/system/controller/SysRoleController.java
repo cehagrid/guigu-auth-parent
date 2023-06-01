@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,6 +55,7 @@ public class SysRoleController {
         return Result.ok();
     }*/
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.add')")
     @ApiOperation("添加角色")
     @PostMapping("/save")
     public Result addSysRole(@RequestBody SysRole sysRole) {
@@ -65,6 +67,7 @@ public class SysRoleController {
         }
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @ApiOperation("根据id查询角色")
     @GetMapping("/getById/{id}")
     public Result getById(@PathVariable Long id) {
@@ -73,6 +76,7 @@ public class SysRoleController {
         return Result.ok(sysRole);
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.update')")
     @ApiOperation("根据id更新角色信息")
     @PostMapping("/updateById")
     public Result updateById(@RequestBody SysRole sysRole) {
@@ -89,6 +93,7 @@ public class SysRoleController {
         }
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.remove')")
     @ApiOperation("根据id删除")
     @DeleteMapping("/deleteById/{id}")
     public Result deleteById(@PathVariable Long id) {
@@ -100,6 +105,7 @@ public class SysRoleController {
         }
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.remove')")
     @ApiOperation("批量删除")
     @DeleteMapping("/batchDelete")
     public Result batchDelete(@RequestBody List<Long> ids) {
@@ -112,6 +118,7 @@ public class SysRoleController {
         }
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @ApiOperation("分页及带条件的查询,自定义sql语句的方法")
     @GetMapping("/{current}/{size}")
     public Result getPage(
@@ -129,7 +136,7 @@ public class SysRoleController {
     }
 
 
-
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @ApiOperation("分页及带条件的查询")
     @GetMapping("/getPageByMyBatisPlus/{current}/{size}")
     public Result getPageByMyBatisPlus(@PathVariable Long current , @PathVariable Long size , SysRoleQueryVo roleQueryVo) {

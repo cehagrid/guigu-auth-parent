@@ -3,14 +3,15 @@ package com.atguigu.system.config;
 import com.atguigu.system.filter.TokenAuthenticationFilter;
 import com.atguigu.system.filter.TokenLoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-@SpringBootApplication//声明当前类是一个配置类
+@EnableGlobalMethodSecurity(prePostEnabled = true)//开启给予Controller方法的权限控制
+@SpringBootConfiguration//声明当前类是一个配置类
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -21,8 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //关闭跨域请求csrf
         http.csrf().disable();
         //设置哪些请求地址不需要认证,哪些地址需要认证
-        http.authorizeRequests().antMatchers("/admin/system/index/login","/admin/system/index/info","/admin/system/index/logout").permitAll()
-                .anyRequest().authenticated();
+//        http.authorizeRequests().antMatchers("/admin/system/index/login","/admin/system/index/info","/admin/system/index/logout").permitAll()
+//                .anyRequest().authenticated();
         //添加过滤器
         http.addFilter(new TokenLoginFilter(authenticationManager(),redisTemplate));
         //设置TokenAuthenticationFilter过滤器在UsernamePasswordAuthenticationFilter之前执行

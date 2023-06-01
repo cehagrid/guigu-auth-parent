@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import org.springframework.security.access.AccessDeniedException;
+
 @ResponseBody
 @ControllerAdvice//标识当前类是异常处理器
 public class GlobalExceptionHandler {
@@ -27,6 +29,16 @@ public class GlobalExceptionHandler {
     public Result resolveGuiguException(GuiguException e){
         e.printStackTrace();
         return Result.fail().message(e.getMessage()).code(e.getCode());
+    }
+
+    /**
+     * spring security异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public Result error(AccessDeniedException e) throws AccessDeniedException {
+        return Result.build(null, ResultCodeEnum.PERMISSION);
     }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -29,6 +30,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(sysUser.getStatus() == 0){
             throw new RuntimeException("该用户已被禁用");
         }
+        //用户授权
+        //根据用户id获取用户的按钮权限标识符
+        List<String> userBtnPermsByUserId = sysUserService.getUserBtnPermsByUserId(sysUser.getId());
+        //给用户设置按钮权限
+        sysUser.setUserPermsList(userBtnPermsByUserId);
         return new CustomUser(sysUser, Collections.emptyList());
     }
 }
